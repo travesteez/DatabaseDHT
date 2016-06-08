@@ -83,7 +83,7 @@ public class RetrieveFile extends Command {
                 Object[] values = vs.toArray(new Object[vs.size()]);
 
                 String numChunksStr = values[0].toString();
-                Long fileSize = Long.parseLong((String) values[0], 10);
+                Long fileSize = Long.parseLong(values[0].toString());
 
                 key += ".000000";
                 int i = 0;
@@ -91,7 +91,7 @@ public class RetrieveFile extends Command {
                     keyObject = new Key(key);
                     vs = chord.retrieve(keyObject);
                     values = vs.toArray(new Object[vs.size()]);
-                    String hexBytes = (String) values[0];
+                    String hexBytes = values[0].toString();
                     if (count + 4096 > fileSize)
                        hexBytes = hexBytes.substring(0, (int) (2 * (fileSize % 4096)));
                     
