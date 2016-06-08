@@ -93,7 +93,7 @@ public class RetrieveFile extends Command {
                     values = vs.toArray(new Object[vs.size()]);
                     String hexBytes = (String) values[0];
                     if (count + 4096 > fileSize)
-                       hexBytes = hexBytes.substring(0, 2 * (fileSize % 4096));
+                       hexBytes = hexBytes.substring(0, (int) (2 * (fileSize % 4096)));
                     
                     byte[] bytes = DatatypeConverter.parseHexBinary(hexBytes);
 
