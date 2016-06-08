@@ -35,6 +35,7 @@ import de.uniba.wiai.lspi.util.console.ConsoleException;
 
 import java.io.Serializable;
 import java.util.Set;
+import javax.xml.bind.DataTypeConverter
 
 /**
  * <p>
@@ -80,14 +81,16 @@ public class RetrieveFile extends Command {
                 Set<Serializable> vs = chord.retrieve(keyObject);
                 Object[] values = vs.toArray(new Object[vs.size()]);
 
-                Integer numChunks = (Integer) values[0];
+                Long numChunks = (Long) values[0];
 
                 key += ".000000";
                 for (int i = 0; i < numChunks;) {
                     keyObject = new Key(key);
                     vs = chord.retrieve(keyObject);
                     values = vs.toArray(new Object[vs.size()]);
-                    Byte[] bytes = values[0];
+                    String hexBytes = values[0];
+                    
+                    Byte[] bytes = DataTypeConverter.parseHexBinary(hexBytes);
 
                     fos.write(bytes);
 
