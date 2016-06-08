@@ -35,8 +35,8 @@ import de.uniba.wiai.lspi.util.console.Command;
 import de.uniba.wiai.lspi.util.console.ConsoleException;
 
 
-
-import java.io.PrintStream;
+import javax.xml.bind.DatatypeConverter;
+import java.io.*;
 
 /**
  * <p>
@@ -54,17 +54,12 @@ public class InsertFile extends Command {
 	/**
 	 * The name of this {@link Command}. 
 	 */
-    public static final String COMMAND_NAME = "insertN";
+    public static final String COMMAND_NAME = "insertFile";
     
     /**
      * The name of the parameter, that defines the key of the value to insert. 
      */
     protected static final String KEY_PARAM = "key";
-    
-    /**
-     * The name of the parameter, that defines the value to insert. 
-     */
-    protected static final String VALUE_PARAM = "value";
     
     /** Creates a new instance of Insert 
      * @param toCommand1 
@@ -80,16 +75,18 @@ public class InsertFile extends Command {
         }
         Chord chord = ((RemoteChordNetworkAccess)this.toCommand[1]).getChordInstance();
         
-        File insertFile = new File("./"+key);
-        Integer chunks = insertFile.length()/4096;
+        File inFile = new File("./"+key);
+        Long chunks = inFile.length()/4096;
         Byte[] buffer = new Byte[4096];
+        String hexString;
         Key keyObject;
         
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(insertFile))) {
             int tmp = 0;
             while ((tmp = bis.read(buffer)) > 0) {
                keyObject = new Key(key+String.format(".%06d", tmp));
-               Value insertVal = new Value(buffer);
+               hexString = printHexBinary(buffer);
+               Value insertVal = new Value(hexString);
                try {
                    chord.insert(keyObject, insertVal);
                }
