@@ -80,7 +80,7 @@ public class InsertFile extends Command {
         byte[] buffer = new byte[4096];
         String hexString;
         Key keyObject;
-        
+        try {
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(inFile))) {
             int tmp = 0;
             while ((tmp = bis.read(buffer)) > 0) {
@@ -105,6 +105,9 @@ public class InsertFile extends Command {
                ConsoleException e = new ConsoleException("Exception during execution of command. "+ t.getMessage(), t);
                throw e;
             }
+        }
+        } catch (Exception e) {
+            System.out.println("Error...");
         }
     }
     
