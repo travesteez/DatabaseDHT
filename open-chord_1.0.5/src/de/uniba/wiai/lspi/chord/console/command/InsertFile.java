@@ -76,7 +76,7 @@ public class InsertFile extends Command {
         Chord chord = ((RemoteChordNetworkAccess)this.toCommand[1]).getChordInstance();
         
         File inFile = new File("./"+key);
-        Long chunks = inFile.length()/4096;
+        Long chunks = inFile.length();
         byte[] buffer = new byte[4096];
         String hexString;
         Key keyObject;
@@ -100,8 +100,7 @@ public class InsertFile extends Command {
 
             try {
                 chord.insert(keyObject, insertVal);
-            } catch (Throwable t) {
-                
+            } catch (Throwable t) {          
                ConsoleException e = new ConsoleException("Exception during execution of command. "+ t.getMessage(), t);
                throw e;
             }
