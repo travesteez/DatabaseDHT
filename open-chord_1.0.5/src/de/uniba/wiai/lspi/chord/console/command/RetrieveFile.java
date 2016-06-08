@@ -83,14 +83,17 @@ public class RetrieveFile extends Command {
                 Object[] values = vs.toArray(new Object[vs.size()]);
 
                 String numChunksStr = (String) values[0];
-                Long numChunks = Long.parseLong((String) values[0], 10);
+                Long fileSize = Long.parseLong((String) values[0], 10);
 
                 key += ".000000";
-                for (int i = 0; i < numChunks;) {
+                int i = 0;
+                for (long count = 0; count < fileSize; count += 4096) {
                     keyObject = new Key(key);
                     vs = chord.retrieve(keyObject);
                     values = vs.toArray(new Object[vs.size()]);
                     String hexBytes = (String) values[0];
+                    if (count + 4096 > fileSize)
+                       hexBytes = hexBytes.substring(0, 2 * (fileSize % 4096));
                     
                     byte[] bytes = DatatypeConverter.parseHexBinary(hexBytes);
 
