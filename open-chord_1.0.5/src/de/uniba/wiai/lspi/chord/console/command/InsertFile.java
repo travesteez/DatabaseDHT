@@ -83,8 +83,9 @@ public class InsertFile extends Command {
         try {
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(inFile))) {
             int tmp = 0;
+            int index = 0;
             while ((tmp = bis.read(buffer)) > 0) {
-               keyObject = new Key(key+String.format(".%06d", tmp));
+               keyObject = new Key(key+String.format(".%06d", index));
                hexString = DatatypeConverter.printHexBinary(buffer);
                Value insertVal = new Value(hexString);
                try {
@@ -94,6 +95,7 @@ public class InsertFile extends Command {
                    ConsoleException e = new ConsoleException("Exception during execution of command. "+ t.getMessage(), t);
                    throw e;
                }
+               index++;
             }
             keyObject = new Key(key);
             Value insertVal = new Value(chunks.toString());
