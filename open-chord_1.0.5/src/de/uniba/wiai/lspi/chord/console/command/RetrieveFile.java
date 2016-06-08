@@ -110,7 +110,7 @@ public class RetrieveFile extends Command {
             }
         }
         catch (Exception e) {
-            this.out.println("Got exception when retrieving file.");
+            this.out.println("Got exception when retrieving file. " + e.getMessage);
         }
 
     }
