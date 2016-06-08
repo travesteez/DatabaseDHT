@@ -77,15 +77,15 @@ public class InsertFile extends Command {
         
         File inFile = new File("./"+key);
         Long chunks = inFile.length()/4096;
-        Byte[] buffer = new Byte[4096];
+        byte[] buffer = new byte[4096];
         String hexString;
         Key keyObject;
         
-        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(insertFile))) {
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(inFile))) {
             int tmp = 0;
             while ((tmp = bis.read(buffer)) > 0) {
                keyObject = new Key(key+String.format(".%06d", tmp));
-               hexString = printHexBinary(buffer);
+               hexString = DatatypeConverter.printHexBinary(buffer);
                Value insertVal = new Value(hexString);
                try {
                    chord.insert(keyObject, insertVal);
@@ -96,7 +96,7 @@ public class InsertFile extends Command {
                }
             }
             keyObject = new Key(key);
-            insertVal = new Value(chunks);
+            Value insertVal = new Value(chunks.toString());
 
             try {
                 chord.insert(keyObject, insertVal);
@@ -117,7 +117,6 @@ public class InsertFile extends Command {
         this.out.println("The key is inserted starting from the node provided as parameter.");
         this.out.println("Required parameters: ");
         this.out.println("\t" + KEY_PARAM + ": The key for the value.");
-        this.out.println("\t" + VALUE_PARAM + ": The value to insert.");
         this.out.println();
     }
     
