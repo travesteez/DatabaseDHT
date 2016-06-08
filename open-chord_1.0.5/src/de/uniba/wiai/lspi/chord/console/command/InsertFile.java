@@ -75,25 +75,39 @@ public class InsertFile extends Command {
     
     public void exec() throws ConsoleException {
         String key = this.parameters.get(KEY_PARAM);
-        String value = this.parameters.get(VALUE_PARAM);
         if ( (key == null) || (key.length() == 0) ){
             throw new ConsoleException("Not enough parameters! " + KEY_PARAM + " is missing.");
         }
-        if ( (value == null) || (value.length() == 0) ){
-            throw new ConsoleException("Not enough parameters! " + VALUE_PARAM + " is missing.");
-        }
-        Chord chord = ((RemoteChordNetworkAccess)this.toCommand[1]).getChordInstance(); 
+        Chord chord = ((RemoteChordNetworkAccess)this.toCommand[1]).getChordInstance();
         
-        Key keyObject = new Key(key);
-        Value valueObject = new Value(value);
-        try {
-            chord.insert(keyObject, valueObject);
-        }
-        catch (Throwable t){
-            ConsoleException e 
-                    = new ConsoleException("Exception during execution of command. " 
-                    + t.getMessage(), t);
-            throw e;
+        File insertFile = new File("./"+key);
+        Integer chunks = insertFile.length()/4096;
+        Byte[] buffer = new Byte[4096];
+        Key keyObject;
+        
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(insertFile))) {
+            int tmp = 0;
+            while ((tmp = bis.read(buffer)) > 0) {
+               keyObject = new Key(key+String.format(".%06d", tmp));
+               Value insertVal = new Value(buffer);
+               try {
+                   chord.insert(keyObject, insertVal);
+               }
+               catch (Throwable t) {
+                   ConsoleException e = new ConsoleException("Exception during execution of command. "+ t.getMessage(), t);
+                   throw e;
+               }
+            }
+            keyObject = new Key(key);
+            insertVal = new Value(chunks);
+
+            try {
+                chord.insert(keyObject, insertVal);
+            } catch (Throwable t) {
+                
+               ConsoleException e = new ConsoleException("Exception during execution of command. "+ t.getMessage(), t);
+               throw e;
+            }
         }
     }
     
