@@ -122,7 +122,6 @@ public class Main {
 				ShowSuccessorList.class.getName());
 		commandMapping.put(ShutdownNodes.COMMAND_NAME, ShutdownNodes.class
 				.getName());
-
 		commandMapping.put(ShowEntries.COMMAND_NAME, ShowEntries.class
 				.getName());
 
@@ -135,8 +134,11 @@ public class Main {
 				.getName());
 		commandMapping.put(InsertNetwork.COMMAND_NAME, InsertNetwork.class
 				.getName());
+		commandMapping.put(InsertFile.COMMAND_NAME, InsertFile.class.getName());
 		commandMapping.put(RetrieveNetwork.COMMAND_NAME, RetrieveNetwork.class
 				.getName());
+		commandMapping.put(RetrieveFile.COMMAND_NAME, RetrieveFile.class
+		      .getName());
 		commandMapping.put(RemoveNetwork.COMMAND_NAME, RemoveNetwork.class
 				.getName());
 		commandMapping.put(ShowEntriesNetwork.COMMAND_NAME,
