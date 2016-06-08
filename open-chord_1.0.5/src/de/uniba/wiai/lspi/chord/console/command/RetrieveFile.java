@@ -60,7 +60,7 @@ public class RetrieveFile extends Command {
     /** Creates a new instance of Retrieve
      * @param toCommand1
      * @param out1 */
-    public RetrieveNetwork(Object[] toCommand1, java.io.PrintStream out1) {
+    public RetrieveFile(Object[] toCommand1, java.io.PrintStream out1) {
         super(toCommand1, out1);
     }
 
