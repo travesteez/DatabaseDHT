@@ -83,7 +83,7 @@ public class RetrieveFile extends Command {
                 Object[] values = vs.toArray(new Object[vs.size()]);
 
                 String numChunksStr = (String) values[0];
-                Long numChunks = Long.parseLong(values[0], 10);
+                Long numChunks = Long.parseLong((String) values[0], 10);
 
                 key += ".000000";
                 for (int i = 0; i < numChunks;) {
