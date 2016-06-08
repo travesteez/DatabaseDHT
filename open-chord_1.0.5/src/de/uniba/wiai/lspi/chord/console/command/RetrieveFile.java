@@ -34,6 +34,7 @@ import de.uniba.wiai.lspi.util.console.Command;
 import de.uniba.wiai.lspi.util.console.ConsoleException;
 
 import java.io.Serializable;
+import java.io.*;
 import java.util.Set;
 import javax.xml.bind.DatatypeConverter;
 
