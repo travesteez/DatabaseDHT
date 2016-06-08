@@ -45,7 +45,7 @@ import java.util.Set;
  * @author  sven
  * @version 1.0.5
  */
-public class RetrieveNetworkFile extends Command {
+public class RetrieveFile extends Command {
 
    /**
     * The name of this {@link Command}.
