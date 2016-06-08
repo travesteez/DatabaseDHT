@@ -82,7 +82,7 @@ public class RetrieveFile extends Command {
                 Set<Serializable> vs = chord.retrieve(keyObject);
                 Object[] values = vs.toArray(new Object[vs.size()]);
 
-                String numChunksStr = (String) values[0];
+                String numChunksStr = values[0].toString());
                 Long fileSize = Long.parseLong((String) values[0], 10);
 
                 key += ".000000";
