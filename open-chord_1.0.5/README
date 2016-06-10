@@ -1,0 +1,19 @@
+To build the source, use the following command:
+
+ant compile
+
+To start a node, use the following command:
+
+java -cp ./build/classes:./config de.uniba.wiai.lspi.chord.console.Main
+
+Once the driver is started, you can start a node by using:
+joinN
+
+To join a Chord ring, use the following command:
+joinN -bootstrap <IP>
+
+From here, a node can insert a file using:
+insertFile -key <FILENAME>
+
+And to retrieve a file:
+retrieveFile -key <FILENAME>
